@@ -694,9 +694,6 @@ type FeedMedia struct {
 //
 // See example: examples/media/mediaDelete.go
 func (media *FeedMedia) Delete() error {
-	for i := range media.Items {
-		media.Items[i].Delete()
-	}
 	return nil
 }
 
@@ -751,9 +748,6 @@ func (media *FeedMedia) Sync() error {
 }
 
 func (media *FeedMedia) setValues() {
-	for i := range media.Items {
-		setToItem(&media.Items[i], media)
-	}
 }
 
 func (media FeedMedia) Error() error {
