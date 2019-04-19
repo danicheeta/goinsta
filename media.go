@@ -678,9 +678,12 @@ type FeedMedia struct {
 	endpoint  string
 	timestamp string
 
-	Items []struct {
+	FeedItems []struct {
 		Media Item `json:"media_or_ad"`
 	} `json:"feed_items"`
+
+	Items []Item `json:"items"`
+
 	NumResults          int    `json:"num_results"`
 	MoreAvailable       bool   `json:"more_available"`
 	AutoLoadMoreEnabled bool   `json:"auto_load_more_enabled"`
@@ -748,6 +751,13 @@ func (media *FeedMedia) Sync() error {
 }
 
 func (media *FeedMedia) setValues() {
+	for i := range media.Items {
+		setToItem(&media.Items[i], media)
+	}
+
+	for i := range media.FeedItems {
+		setToItem(&media.FeedItems[i].Media, media)
+	}
 }
 
 func (media FeedMedia) Error() error {
